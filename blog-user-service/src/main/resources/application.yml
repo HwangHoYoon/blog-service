@@ -1,0 +1,65 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: blog-user-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/blog_db
+    username: blog_user
+    password: pass@word1
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    defer-datasource-initialization: true
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: pass@word1
+jwt:
+  secretKey: MTZfNl9CRV9qYWdpeWFfc2VjcmV0S2V5X2Jhc2U2NEVuY29kZV9hZGRpdGlvbmFsX2RhdGFfMjAyMzEwMjRfaHdhbmdfand0
+  access-token-expiration: 900000 # 15분 (밀리초)
+  refresh-token-expiration: 604800000 # 7일 (밀리초)
+web:
+  authorize:
+    url: /swagger-ui/**,/swagger-client/**,/api-docs/**,/swagger-ui.html,/v3/api-docs/**,/error,/favicon.ico,/webjars/**,/auth/**
+cors:
+  origins: http://localhost:3000,http://localhost:8080
+logging:
+  level:
+    com.blog.bloguserservice: DEBUG
+  pattern:
+    level: "%5p [%X{traceId:-},%X{spanId:-}]"
+  org:
+    hibernate:
+      SQL: DEBUG
+    springframework:
+      core:
+        LocalVariableTableParameterNameDiscoverer: error
+
+springdoc:
+  packages-to-scan: com.blog.bloguserservice
+  swagger-ui.path: /api-docs
+
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    disable-swagger-default-url: true
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+  cache:
+    disabled: true
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
